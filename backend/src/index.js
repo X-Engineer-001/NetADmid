@@ -1,7 +1,7 @@
 import express from "express";
 import rootRouter from "./routes";
 import { prisma } from "./adapters";
-const port = process.env.PORT || 8000;
+const port = 8000;
 const app = express();
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
