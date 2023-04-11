@@ -11,7 +11,14 @@ datasource db {
 }
 
 model User {
-id Int @id @default(autoincrement())
-name String
+  id Int @id @default(autoincrement())
+  name String
+  posts Post[]
 }
 
+model Post {
+  id Int @id @default(autoincrement())
+  poster User @relation(fields: [posterID], references: [id])
+  posterID Int
+  text String
+}
