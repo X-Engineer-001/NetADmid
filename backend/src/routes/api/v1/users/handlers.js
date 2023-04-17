@@ -1,27 +1,33 @@
 import { prisma } from "../../../../adapters";
 import dotenv from "dotenv";
-dotenv.config({path: "src/openAI.env"});
-import { Configuration, OpenAIApi } from "openai";
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_KEY,
-});
-const openai = new OpenAIApi(configuration);
+dotenv.config({path: "src/AI.env"});
+import Replicate from "replicate";
 
 export async function getAvatar(req, res) {
     try{
-        const response = await openai.createImage({
-            prompt: req.body.text,
-            n: 1,
-            size: "256x256",
-        });
-        const img_url = response.data.data[0].url;
+        const replicate = new Replicate({auth: process.env.AI_KEY});
+        const response = await replicate.run(
+            "laion-ai/erlich:92fa143ccefeed01534d5d6648bd47796ef06847a6bc55c0e5c5b6975f2dcdfb",
+            {
+                input: {
+                    prompt: req.body.text,
+                    guidance_scale: 10,
+                    steps: 100,
+                    batch_size: 1,
+                    width: 128,
+                    height: 128,
+                    aesthetic_rating: 1,
+                    aesthetic_weight: 0
+                }
+            }
+        );
+        const img_url = response[0][0];
         if(img_url){
             return res.status(201).json({img:img_url});
         }else{
-            throw "OpenAI get failed.";
+            throw "API get failed.";
         }
     }catch(e){
-        console.log(e.response);
         return res.status(201).json({});
     }
 }
