@@ -11,9 +11,8 @@ export default function About() {
     }
     return(
         <div className="App">
-        <div>
-            <img src={reactLogo} className="logo react anime" alt="React logo" />
-        </div>
+        <br/>
+        <img src={reactLogo} className="logo react anime" alt="React logo" />
         <h1>黃允誠</h1>
         <div className="card">
             <button onClick={clicked}>

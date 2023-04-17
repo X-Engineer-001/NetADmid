@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { getAllUsers } from "./handlers";
-import { createOneUser } from "./handlers";
+import { getAvatar,getAllPosts,createOneUser,login,post,delPost } from "./handlers";
 const router = Router();
-router.get(`/`, getAllUsers);
-router.post(`/`, createOneUser); 
+router.get(`/view`, getAllPosts);
+router.post(`/register`, createOneUser);
+router.post(`/login`, login);
+router.post(`/post`, post);
+router.post(`/delPost`, delPost);
+router.post(`/avatar`, getAvatar);
 export default router;
