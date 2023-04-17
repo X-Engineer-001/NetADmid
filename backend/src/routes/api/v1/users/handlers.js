@@ -42,7 +42,7 @@ export async function createOneUser(req, res) {
     const name = req.body.name;
     const pass = req.body.pass;
     const img = req.body.img;
-    if(name.trim().length>0&&name.length<=20&&pass.trim().length>0&&pass.length<=20
+    if(name.trim().length>0&&name.length<=10&&pass.trim().length>0&&pass.length<=20
     &&(img.slice(0,22)==="data:image/png;base64,"||img.slice(0,23)==="data:image/jpeg;base64,"||img.slice(0,3)==="AI:")){
         try{
             const user = await prisma.user.create({ data: { name: name, pass: pass, img: img} });
@@ -60,7 +60,7 @@ export async function createOneUser(req, res) {
 export async function login(req, res) {
     const name = req.body.name;
     const pass = req.body.pass;
-    if(name.trim().length>0&&name.length<=20&&pass.trim().length>0&&pass.length<=20){
+    if(name.trim().length>0&&name.length<=10&&pass.trim().length>0&&pass.length<=20){
         try{
             const user = await prisma.user.findUnique({where:{ name: name} });
             if(pass===user.pass){
@@ -80,13 +80,13 @@ export async function post(req, res) {
     const name = req.body.name;
     const pass = req.body.pass;
     const text = req.body.text;
-    if(name.trim().length>0&&name.length<=20&&pass.trim().length>0&&pass.length<=20&&text.trim().length>0&&text.length<=30){
+    if(name.trim().length>0&&name.length<=10&&pass.trim().length>0&&pass.length<=20&&text.trim().length>0&&text.length<=30){
         try{
             const user = await prisma.user.findUnique({ where:{ name: name} });
             if(user&&pass===user.pass){
                 const posted = await prisma.post.create({
                     data:{
-                        text:text.replaceAll("'","’").replaceAll('"','”').replaceAll('\\','＼').replaceAll('/','／').replaceAll(':','：').replaceAll(';','；').replaceAll('(','（').replaceAll(')','）').replaceAll('[','［').replaceAll(']','］').replaceAll('{','｛').replaceAll('}','｝'),
+                        text:text.replaceAll("'","’").replaceAll('"','”').replaceAll('\\','＼').replaceAll('/','／').replaceAll(':','：').replaceAll(';','；').replaceAll('(','（').replaceAll(')','）').replaceAll('[','［').replaceAll(']','］').replaceAll('{','｛').replaceAll('}','｝').replaceAll('!','！').replaceAll('?','？').replaceAll('#','＃').replaceAll('$','＄').replaceAll('&','＆').replaceAll('|','｜').replaceAll('+','＋').replaceAll('-','－').replaceAll('*','＊').replaceAll('=','＝'),
                         poster:{connect:{name:name}}
                     }
                 });
@@ -105,7 +105,7 @@ export async function post(req, res) {
 export async function delPost(req, res) {
     const name = req.body.name;
     const pass = req.body.pass;
-    if(name.trim().length>0&&name.length<=20&&pass.trim().length>0&&pass.length<=20){
+    if(name.trim().length>0&&name.length<=10&&pass.trim().length>0&&pass.length<=20){
         try{
             const user = await prisma.user.findUnique({ where:{ name: name} });
             if(user&&pass===user.pass){

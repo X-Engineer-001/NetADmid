@@ -83,7 +83,7 @@ export default function Create() {
                 </form>
             </div>
             <div style={{textAlign:"left"}}>
-                <input name="username" maxLength="20" value={inputs.username} onChange={handleTextInputChange}/>
+                <input name="username" maxLength="10" value={inputs.username} onChange={handleTextInputChange}/>
                 <br/>
                 <input name="password" maxLength="20" value={inputs.password} onChange={handleTextInputChange} style={{display:"block"}}/>
                 <ImageUploading onChange={onChange} dataURLKey="url" maxFileSize={5120} acceptType={["jpg", "png"]} style={{display: "block"}}>
