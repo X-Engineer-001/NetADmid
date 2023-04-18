@@ -12,7 +12,6 @@ export default function Create() {
             services.user.createOne(inputs).then((gotData) => {
                 if(gotData.name){
                     setInputs({username: "", password: "", image:""});
-                    setImg("");
                     setMessage("Wellcome. Now go login to Message.");
                 }else{
                     setMessage("Username used!");
