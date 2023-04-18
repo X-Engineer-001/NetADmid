@@ -105,7 +105,6 @@ export default function View() {
                     </span>
                 </div>
             )}
-            {nope}
         </div>
     );
 }
