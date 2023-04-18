@@ -37,51 +37,15 @@ function Post({postInput,post,text}) {
     )
 }
 
-var dictionary = {};
 export default function View() {
     const [logins, setLogins] = useState({username: "", password: ""});
     const [message, setMessage] = useState("");
     const [page, setPage] = useState("Login");
     const [post, setPost] = useState("");
     const [data, setData] = useState([]);
-    const [nope, setNope] = useState(true);
-    const rerender = () => {
-        setNope(pre=>(!pre));
-    }
-    const getUrl = (url) => {
-        services.user.getAvatar(url.slice(3)).then((gotUrl)=>{
-            if(gotUrl){
-                dictionary[url]=gotUrl;
-                rerender();
-            }else{
-                services.user.getAvatar(url.slice(3)).then((gotUrl)=>{
-                    if(gotUrl){
-                        dictionary[url]=gotUrl;
-                        rerender();
-                    }else{
-                        services.user.getAvatar(url.slice(3)).then((gotUrl)=>{
-                            if(gotUrl){
-                                dictionary[url]=gotUrl;
-                                rerender();
-                            }else{
-                                dictionary[url]=null;
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
     const refresh = () => {
         services.user.getPosts().then((gotData) => {
             setData(gotData);
-            for(var i=0;i<gotData.length;i++){
-                const url=gotData[i].poster.img;
-                if((url.slice(0,3)==="AI:")&&(!dictionary[url])){
-                    dictionary[url]=url;
-                    getUrl(url);
-                }
-            }
         });
     }
     useEffect(()=>refresh(),[]);
@@ -131,7 +95,7 @@ export default function View() {
             <br/>
             {data.map((value,index) => 
                 <div style={{display: "block",textAlign:"left"}} key={value.id}>
-                    <img src={dictionary[value.poster.img]?dictionary[value.poster.img]:value.poster.img} width="80" height="80" style={{display: "inline-block",verticalAlign:"top"}} />
+                    <img src={value.poster.img} width="80" height="80" style={{display: "inline-block",verticalAlign:"top"}} />
                     <span style={{display: "inline-block",fontSize:"1.1em"}}>
                         {value.poster.name}:<br/>
                         {value.text}<br/>

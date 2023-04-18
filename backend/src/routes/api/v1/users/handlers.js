@@ -10,7 +10,7 @@ export async function getAvatar(req, res) {
             "laion-ai/erlich:92fa143ccefeed01534d5d6648bd47796ef06847a6bc55c0e5c5b6975f2dcdfb",
             {
                 input: {
-                    prompt: req.body.text,
+                    prompt: req.body.text.slice(0,10),
                     guidance_scale: 10,
                     steps: 100,
                     batch_size: 1,
@@ -28,6 +28,7 @@ export async function getAvatar(req, res) {
             throw "API get failed.";
         }
     }catch(e){
+        console.log(e.response);
         return res.status(201).json({});
     }
 }
@@ -49,7 +50,7 @@ export async function createOneUser(req, res) {
     const pass = req.body.pass;
     const img = req.body.img;
     if(name.trim().length>0&&name.length<=10&&pass.trim().length>0&&pass.length<=20
-    &&(img.slice(0,22)==="data:image/png;base64,"||img.slice(0,23)==="data:image/jpeg;base64,"||img.slice(0,3)==="AI:")){
+    &&(img.slice(0,22)==="data:image/png;base64,"||img.slice(0,23)==="data:image/jpeg;base64,"||img.slice(0,32)==="https://replicate.delivery/pbxt/"||img==="")){
         try{
             const user = await prisma.user.create({ data: { name: name, pass: pass, img: img} });
             return res.status(201).json(user);

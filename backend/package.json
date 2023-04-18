@@ -4,11 +4,13 @@
   "main": "src\\index.js",
   "license": "MIT",
   "dependencies": {
+    "@huggingface/inference": "^1.8.0",
     "@prisma/client": "^4.12.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "glob": "^9.3.4",
+    "node-fetch": "^3.3.1",
     "openai": "^3.2.1",
     "prisma": "^4.12.0",
     "replicate": "^0.11.0"
@@ -18,7 +20,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": " node --experimental-specifier-resolution=node src/index.js",
+    "start": "yarn prisma migrate deploy && node --experimental-specifier-resolution=node src/index.js",
     "dev": "nodemon --experimental-specifier-resolution=node src/index.js"
   }
 }
